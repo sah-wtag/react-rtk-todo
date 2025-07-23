@@ -1,2 +1,2 @@
 1. npm run dev
-2. 
+2. npm run server
