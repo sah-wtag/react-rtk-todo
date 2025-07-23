@@ -2,32 +2,12 @@
   "todos": [
     {
       "id": "1",
-      "title": "Learn Redux Toolkit",
+      "title": "New todo 2343223",
       "done": false
     },
     {
       "id": "2",
-      "title": "Build TODO App",
-      "done": true
-    },
-    {
-      "id": "807c",
-      "title": "adsasdas",
-      "done": false
-    },
-    {
-      "id": "b906",
-      "title": "adssasddas",
-      "done": false
-    },
-    {
-      "id": "f724",
-      "title": "adssdadsaas",
-      "done": false
-    },
-    {
-      "id": "0da1",
-      "title": "hello vai",
+      "title": "todo 1 2 3 2343422234",
       "done": false
     }
   ]

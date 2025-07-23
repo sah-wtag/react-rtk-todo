@@ -1,15 +1,29 @@
 import { useState } from "react";
-import { useAddTodoMutation } from "./todosApi";
+import { useAddTodoMutation, useGetTodosQuery } from "./todosApi";
 import "./TodoForm.css";
 
 export default function TodoForm() {
   const [title, setTitle] = useState("");
   const [addTodo] = useAddTodoMutation();
+  const { data: todos = [] } = useGetTodosQuery(1);
+
+  const getNextId = () => {
+    const numericIds = todos
+      .map((todo) => parseInt(todo.id))
+      .filter((id) => !isNaN(id));
+    const maxId = numericIds.length > 0 ? Math.max(...numericIds) : 0;
+    return (maxId + 1).toString();
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (title.trim()) {
-      await addTodo({ title, done: false });
+      const newTodo = {
+        id: getNextId(),
+        title,
+        done: false,
+      };
+      await addTodo(newTodo);
       setTitle("");
     }
   };
