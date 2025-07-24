@@ -1,14 +1,18 @@
+import { useState } from "react";
 import {
   useGetTodosQuery,
   useUpdateTodoMutation,
   useDeleteTodoMutation,
 } from "./todosApi";
-import { useState } from "react";
 import "./TodoList.css";
 
 export default function TodoList() {
   const [page, setPage] = useState(1);
-  const { data: todos = [], isLoading } = useGetTodosQuery(page);
+  const [search, setSearch] = useState("");
+
+  const { data: todos = [], isLoading } = useGetTodosQuery({ page, search });
+  console.log("search:", search, "page:", page, "todos:", todos);
+
   const [updateTodo] = useUpdateTodoMutation();
   const [deleteTodo] = useDeleteTodoMutation();
 
@@ -40,12 +44,28 @@ export default function TodoList() {
     await deleteTodo(id);
   };
 
+  const handleSearch = (e) => {
+    setSearch(e.target.value);
+    setPage(1);
+  };
+
   if (isLoading) return <p>Loading...</p>;
 
   return (
     <>
+      {/* 🔍 Search Bar */}
+      <div className="search-container">
+        <input
+          type="text"
+          placeholder="Search todos..."
+          value={search}
+          onChange={handleSearch}
+          className="search-input"
+        />
+      </div>
+
       <ul className="todo-list">
-        {todos.map((todo) => (
+        {[...todos].reverse().map((todo) => (
           <li key={todo.id} className="todo-item">
             {editingId === todo.id ? (
               <input
@@ -102,6 +122,7 @@ export default function TodoList() {
         ))}
       </ul>
 
+      {/* Pagination */}
       <div className="pagination">
         <button onClick={() => setPage((p) => Math.max(p - 1, 1))}>Prev</button>
         <span>Page {page}</span>
