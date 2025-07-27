@@ -81,7 +81,6 @@ export default function TodoList() {
               />
             ) : (
               <span
-                onClick={() => toggleDone(todo)}
                 style={{
                   textDecoration: todo.done ? "line-through" : "none",
                 }}
@@ -101,6 +100,15 @@ export default function TodoList() {
                     Cancel
                   </button>
                 </>
+              ) : todo.done ? (
+                <>
+                  <button
+                    onClick={() => toggleDone(todo)}
+                    className="btn orange"
+                  >
+                    UNDONE
+                  </button>
+                </>
               ) : (
                 <>
                   <button
@@ -114,6 +122,12 @@ export default function TodoList() {
                     className="btn red"
                   >
                     Delete
+                  </button>
+                  <button
+                    onClick={() => toggleDone(todo)}
+                    className="btn green"
+                  >
+                    DONE
                   </button>
                 </>
               )}
