@@ -1,17 +1,17 @@
 import { useState } from "react";
-import { useAddTodoMutation, useGetTodosQuery } from "./todosApi";
+import { useAddTodoMutation, useGetAllTodosQuery } from "./todosApi";
 import "./TodoForm.css";
 
 export default function TodoForm() {
   const [title, setTitle] = useState("");
   const [addTodo] = useAddTodoMutation();
-  const { data: todos = [] } = useGetTodosQuery(1);
+  const { data: allTodos = [] } = useGetAllTodosQuery();
 
   const getNextId = () => {
-    const numericIds = todos
+    const allIds = allTodos
       .map((todo) => parseInt(todo.id))
       .filter((id) => !isNaN(id));
-    const maxId = numericIds.length > 0 ? Math.max(...numericIds) : 0;
+    const maxId = allIds.length > 0 ? Math.max(...allIds) : 0;
     return (maxId + 1).toString();
   };
 
@@ -20,7 +20,7 @@ export default function TodoForm() {
     if (title.trim()) {
       const newTodo = {
         id: getNextId(),
-        title,
+        title: title.trim(),
         done: false,
       };
       await addTodo(newTodo);
